@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "StatGatherer.h"
 #include <iostream>
 #include <sstream>
@@ -25,7 +24,7 @@ std::string StatGatherer::gatherPropsFormat(PropsBits bits)
 	return result;
 }
 
-StatGatherer::StatGatherer()
+StatGatherer::StatGatherer() : invalid_count(0)
 {
 }
 

@@ -1,7 +1,6 @@
-#include "stdafx.h"
-#include "StatAggregator.h"
 
 #include <fstream>
+#include "StatAggregator.h"
 #include "StatElement.h"
 
 
@@ -56,7 +55,11 @@ std::string StatAggregator::generateFileName()
 {
 	std::string name("");
 	name.append(m_path_to_log_folder);
+#ifdef WIN32
 	name.append("file");
+#else
+	name.append("/file");
+#endif // WIN32
 	name.append(std::to_string(m_last_opened_file));
 	name.append(".log");
 
@@ -64,6 +67,7 @@ std::string StatAggregator::generateFileName()
 	if (found != std::string::npos) {
 		name.replace(found,2, "/");
 	}
+
 	return name;
 }
 

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 #include "StatElement.h"
 #include <time.h>
 #include <iostream>
@@ -65,14 +65,15 @@ bool StatElement::parseDocument()
 std::string StatElement::getDateFromTimestamp(std::uint64_t time_stamp)
 {
 	time_t t = time_stamp;
+	char date[20];
 #ifndef WIN32
 	struct tm *tm = localtime(&t);
+	strftime(date, sizeof(date), "%Y-%m-%d", tm);
 #else
 	struct tm tm;
 	localtime_s(&tm, &t);
-#endif // !WIN32
-	char date[20];
 	strftime(date, sizeof(date), "%Y-%m-%d", &tm);
+#endif // !WIN32
 	return std::string(date);
 }
 
