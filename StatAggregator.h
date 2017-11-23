@@ -33,7 +33,7 @@ public:
 	~StatAggregator();
 
 	void generateStat();
-	void writeTo(std::string output_file_path);
+	void writeTo(const std::string& output_file_path);
 	std::string getFormattedStat();
 };
 

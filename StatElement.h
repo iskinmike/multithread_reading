@@ -18,7 +18,7 @@ class StatElement
 	rapidjson::Document m_doc;
 	bool is_valid;
 	bool parseDocument();
-	std::string getDateFromTimestamp(std::uint64_t time_stamp);
+	std::string getDateFromTimestamp(const std::uint64_t& time_stamp);
 public:
 	StatData m_data;
 	bool isValid() const;

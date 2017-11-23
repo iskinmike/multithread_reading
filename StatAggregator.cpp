@@ -99,8 +99,17 @@ void StatAggregator::generateStat()
 	}
 }
 
-void StatAggregator::writeTo(std::string output_file_path)
+void StatAggregator::writeTo(const std::string& output_file_path)
 {
+	std::ofstream result_file;
+	result_file.open(output_file_path);
+
+	if (result_file.is_open()) {
+#ifdef VERBOSE
+		std::cout << "success to open " << output_file_path << std::endl;
+#endif // VERBOSE
+		result_file << getFormattedStat();
+	}
 }
 
 std::string StatAggregator::getFormattedStat()

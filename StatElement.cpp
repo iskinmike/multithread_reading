@@ -13,56 +13,34 @@ std::vector<std::string> props_words = { "prop1", "prop2", "prop3", "prop4", "pr
 
 bool StatElement::parseDocument()
 {
-	if (m_doc.HasMember(ts_word.c_str())) {
-		const rapidjson::Value& ts = m_doc[ts_word.c_str()];
-		if (ts.IsInt64()) {
-			m_data.date.assign(getDateFromTimestamp(ts.GetInt64()));
-		} else {
-			return false;
-		}
-	}
-	else {
+	if (!m_doc.HasMember(ts_word.c_str()) || !m_doc.HasMember(fact_word.c_str()) || !m_doc.HasMember(props_word.c_str())){
 		return false;
 	}
 
-	if (m_doc.HasMember(fact_word.c_str())) {
-		const rapidjson::Value& fact = m_doc[fact_word.c_str()];
-		if (fact.IsString()) {
-			m_data.fact_name.assign(fact.GetString());
-		}
-		else {
-			return false;
-		}
-	}
-	else {
+	const rapidjson::Value& ts = m_doc[ts_word.c_str()];
+	const rapidjson::Value& fact = m_doc[fact_word.c_str()];
+	const rapidjson::Value& props = m_doc[props_word.c_str()];
+
+	if  (!ts.IsInt64() || !fact.IsString() || !props.IsObject()) {
 		return false;
 	}
 
-	if (m_doc.HasMember(props_word.c_str())) {
-		const rapidjson::Value& props = m_doc[props_word.c_str()];
-		if (props.IsObject()) {
-			int counter = 0;
-			PropsBits props_bits;
-			for (auto& el : props_words) {
-				if (props.HasMember(el.c_str())) {
-					props_bits.set(counter);
-				}
-				++counter;
-			}
-			m_data.props = props_bits.to_ullong();
-		}
-		else {
-			return false;
-		}
+	m_data.date.assign(getDateFromTimestamp(ts.GetInt64()));
+	m_data.fact_name.assign(fact.GetString());
+
+	int counter = 0;
+	PropsBits props_bits;
+	for (auto& el : props_words) {
+		props_bits.set(counter, props.HasMember(el.c_str()));
+		++counter;
 	}
-	else {
-		return false;
-	}
+	m_data.props = props_bits.to_ullong();
+
 	return true;
 }
 
 
-std::string StatElement::getDateFromTimestamp(std::uint64_t time_stamp)
+std::string StatElement::getDateFromTimestamp(const std::uint64_t& time_stamp)
 {
 	time_t t = time_stamp;
 	char date[20];
