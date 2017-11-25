@@ -71,7 +71,7 @@ std::string StatAggregator::generateFileName()
 	return name;
 }
 
-StatAggregator::StatAggregator(std::string path_to_log_folder, uint log_files_count, uint thread_counts)
+StatAggregator::StatAggregator(const std::string& path_to_log_folder, const uint& log_files_count, const uint& thread_counts)
 : m_path_to_log_folder(path_to_log_folder), 
   m_log_files_count(log_files_count),
   m_thread_counts(thread_counts),

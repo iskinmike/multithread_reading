@@ -5,12 +5,10 @@
 #include <vector> 
 #include <bitset>
 
-typedef std::bitset<10> PropsBits;
-
 struct StatData {
 	std::string date;
 	std::string fact_name;
-	std::uint64_t props;
+	std::string props;
 };
 
 class StatElement

@@ -8,7 +8,6 @@
 #include <iostream>
 #include "StatGatherer.h"
 
-
 typedef unsigned int uint;
 
 class StatAggregator
@@ -29,7 +28,7 @@ class StatAggregator
 	std::string generateFileName();
 
 public:
-	StatAggregator(std::string path_to_log_folder, uint log_files_count, uint thread_counts);
+	StatAggregator(const std::string& path_to_log_folder, const uint& log_files_count, const uint& thread_counts);
 	~StatAggregator();
 
 	void generateStat();

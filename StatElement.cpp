@@ -1,15 +1,15 @@
 
+
 #include "StatElement.h"
 #include <time.h>
 #include <iostream>
 #include <algorithm>
 
+
 // prepare keywords
 std::string ts_word("ts_fact");
 std::string fact_word("fact_name");
 std::string props_word("props");
-std::vector<std::string> props_words = { "prop1", "prop2", "prop3", "prop4", "prop5",
-									     "prop6", "prop7", "prop8", "prop9", "prop10" };
 
 bool StatElement::parseDocument()
 {
@@ -29,12 +29,17 @@ bool StatElement::parseDocument()
 	m_data.fact_name.assign(fact.GetString());
 
 	int counter = 0;
-	PropsBits props_bits;
-	for (auto& el : props_words) {
-		props_bits.set(counter, props.HasMember(el.c_str()));
-		++counter;
+	std::string props_str("");
+	for (rapidjson::Value::ConstMemberIterator itr = props.MemberBegin();
+		itr != props.MemberEnd(); ++itr)
+	{
+		props_str.append(std::string(itr->name.GetString()).erase(0,4));
+		props_str.append(",");
 	}
-	m_data.props = props_bits.to_ullong();
+	if (!props_str.empty()) {
+		props_str.pop_back();
+	}
+	m_data.props = props_str;
 
 	return true;
 }
