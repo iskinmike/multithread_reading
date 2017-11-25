@@ -28,7 +28,6 @@ bool StatElement::parseDocument()
 	m_data.date.assign(getDateFromTimestamp(ts.GetInt64()));
 	m_data.fact_name.assign(fact.GetString());
 
-	int counter = 0;
 	std::string props_str("");
 	for (rapidjson::Value::ConstMemberIterator itr = props.MemberBegin();
 		itr != props.MemberEnd(); ++itr)
