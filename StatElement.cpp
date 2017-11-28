@@ -49,11 +49,11 @@ std::string StatElement::getDateFromTimestamp(const std::uint64_t& time_stamp)
 	time_t t = time_stamp;
 	char date[20];
 #ifndef WIN32
-	struct tm *tm = localtime(&t);
+	struct tm *tm = gmtime(&t);
 	strftime(date, sizeof(date), "%Y-%m-%d", tm);
 #else
 	struct tm tm;
-	localtime_s(&tm, &t);
+	gmtime_s(&tm, &t);
 	strftime(date, sizeof(date), "%Y-%m-%d", &tm);
 #endif // !WIN32
 	return std::string(date);
